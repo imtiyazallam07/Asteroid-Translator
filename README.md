@@ -10,15 +10,15 @@ Note: Stay connected to internet while using this program
 
 1) googletrans:
 > pip install googletrans==3.1.0a0
-2) gtts
+2) gtts:
 > pip install gtts
-3) playsound
+3) playsound:
 > pip install playsound==1.2.2
-4) pyperclip
+4) pyperclip:
 > pip install pyperclip
-5) colorama
+5) colorama:
 > pip install colorama
-6) progress
+6) progress:
 > pip install progress
 
 ## Note
