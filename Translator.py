@@ -1,4 +1,5 @@
 import googletrans
+import colorama
 from googletrans import Translator
 from gtts import gTTS
 import playsound 
@@ -6,8 +7,8 @@ import os
 import platform
 import time
 import pyperclip
-import colorama
 import socket
+import sys
 from progress.bar import Bar
 from progress.spinner import Spinner
 
@@ -60,16 +61,16 @@ def main():
         except ValueError:
             pass
         keys = command.split(" ")
-        if(keys[0] == "translate"):
-            if(len(keys) == 2):
+        if keys[0] == "translate":
+            if len(keys) == 2:
                 res, recent_lang = translate(frm='english', to=keys[1])
-            elif(len(keys) == 3):
+            elif len(keys) == 3:
                 res, recent_lang = translate(frm=keys[1], to=keys[2])
             else:
                 res, recent_lang = translate(frm='english', to='english')
             print(colorama.Fore.YELLOW + res + colorama.Fore.RESET)
-        elif(keys[0] == 'exit'):
-            if(len(keys) == 1):
+        elif keys[0] == 'exit':
+            if len(keys) == 1:
                 print(colorama.Fore.RED + "Clearing cache and exiting...")
                 if(os.path.exists(".cache-translated.mp3")):
                     print(colorama.Fore.RESET + "Removing .cache-translated.mp3" )
@@ -84,45 +85,45 @@ def main():
                 break
             else:
                 print("\'exit\' command takes no arguments")
-        elif (keys[0] == 'speak'):
-            if(len(keys) == 1):
+        elif keys[0] == 'speak':
+            if len(keys) == 1:
                 save_file(True, res, recent_lang)
                 playsound.playsound(".cache-translated.mp3")
             else:
                 print("\'speak\' command takes no arguments")
-        elif (keys[0] == 'copy'):
-            if(len(keys) == 1):
+        elif keys[0] == 'copy':
+            if len(keys) == 1:
                 pyperclip.copy(res)
             else:
                 print("\'copy\' command takes no arguments")
-        elif (keys[0] == 'clear'):
-            if(len(keys) == 1):
-                if(platform.system() == 'Windows'):
+        elif keys[0] == 'clear':
+            if len(keys) == 1:
+                if platform.system() == 'Windows':
                     os.system('cls')
                 else:
                     os.system('clear')
             else:
                 print("\'clear\' command takes no arguments")
-        elif (keys[0] == 'save'):
-            if(len(keys) == 1):
+        elif keys[0] == 'save':
+            if len(keys) == 1:
                 save_file(False, res, recent_lang)
             else:
                 print("\'save\' command takes no arguments")
-        elif (keys[0] == 'clipboardtranslate'):
+        elif keys[0] == 'clipboardtranslate':
             txt = pyperclip.paste()
-            if(len(keys) == 1):
+            if len(keys) == 1:
                 res, recent_lang = translate(frm='auto', to='english', text=txt)
                 print(res)
             else:
                 print("\'save\' command takes no arguments")
-        elif (keys[0] == 'clean'):
-            if(len(keys) == 1):
+        elif keys[0] == 'clean':
+            if len(keys) == 1:
                 free()
                 res = ""
                 recent_lang = ""
             else:
                 print("\'clean\' command takes no arguments")
-        elif (keys[0] == 'help' and len(keys) == 1):
+        elif keys[0] == 'help' and len(keys) == 1:
             print(colorama.Fore.GREEN + "Asteroid-Translator Help")
             print("\tTranslate:")
             print("\t\tTranslates text from one language to another")
@@ -188,5 +189,19 @@ def save_file(a, res, recent_lang):
         t1.save(fl)
         print("Saved to:", os.getcwd() + "\\" + fl)
 
-if __name__ == "__main__":
-    main()
+args = sys.argv
+i = 0
+while i < len(args):
+    len
+if len(args) == 0:
+    if __name__ == "__main__":
+        main()
+else:
+    if args[0] == '-h' or args[0] == '--help':
+        print("Asteroid-Translator Help")
+        print("\t-h        : help")
+        print("\t--help    : help")
+        print("\t-v        : version")
+        print("\t--version : version")
+    elif args[0] == '-v' and args[0] == '--version':
+        print("Asteroid Translator 0.1.1")

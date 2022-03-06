@@ -1,10 +1,10 @@
 # Asteroid Translator
 
-A command-line translator program
+A command-line translator program.
 
 ## Usage
-Download the Translator.py file and run that program <br/>
-Note: Stay connected to internet while using this program
+Download the Translator.py file and run that program. <br/>
+Note: Stay connected to internet while using this program.
 
 ## Dependencies
 
