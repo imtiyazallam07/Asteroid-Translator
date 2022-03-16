@@ -60,14 +60,16 @@ def main():
                 command.replace("  ", " ")
         except ValueError:
             pass
-        keys = command.split(" ")
+        keys = command.split(" ", 3)
         if keys[0] == "translate":
             if len(keys) == 2:
                 res, recent_lang = translate(frm='english', to=keys[1])
             elif len(keys) == 3:
                 res, recent_lang = translate(frm=keys[1], to=keys[2])
+            elif len(keys) == 4:
+                res, recent_lang = translate(frm=keys[1], to=keys[2], text=keys[3])
             else:
-                res, recent_lang = translate(frm='english', to='english')
+                res, recent_lang = translate(frm='auto', to='english')
             print(colorama.Fore.YELLOW + res + colorama.Fore.RESET)
         elif keys[0] == 'exit':
             if len(keys) == 1:
@@ -192,16 +194,33 @@ def save_file(a, res, recent_lang):
 args = sys.argv
 i = 0
 while i < len(args):
-    len
-if len(args) == 0:
+    args[i] = args[i].lower()
+    i += 1
+if len(args) > 1 and (args[1] == '--translate' or args[1] == '-t'):
+    args[1] = 'translate'
+if len(args) == 1:
     if __name__ == "__main__":
         main()
-else:
-    if args[0] == '-h' or args[0] == '--help':
+elif len(args) == 2:
+    if args[1] == '-h' or args[1] == '--help' or args[1] == 'help':
         print("Asteroid-Translator Help")
-        print("\t-h        : help")
-        print("\t--help    : help")
-        print("\t-v        : version")
-        print("\t--version : version")
-    elif args[0] == '-v' and args[0] == '--version':
-        print("Asteroid Translator 0.1.1")
+        print("\t-h or --help or help        : help")
+        print("\t-v or --version or version  : version")
+        print("\t-t or --translate or translate: translate")
+        print("\t\tUsage: [translate or --translate or -t] [from language] [to language]")
+        print("\t\tUsage: [translate or --translate or -t] [to]")
+        print("\t\tUsage: [translate or --translate or -t]")
+        print("\t\t\tauto detects the language and translates to the given langauge")
+    elif args[1] == '-v' or args[1] == '--version' or args[1] == 'version':
+        print("Asteroid Translator 0.1.2")
+    elif args[1] == 'translate':
+        res, recent_lang = translate(frm='auto', to='english', text=input("Enter text to translate: "))
+        print(res)
+elif len(args) == 3:
+    if args[1] == 'translate':
+        res, recent_lang = translate(to=args[2], frm='english')
+        print(res)
+elif len(args) == 4:
+    if args[1] == 'translate':
+        res, recent_lang = translate(frm=args[2], to=args[3])
+        print(res)
